@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flounders — Sample Website (RudranshCortex)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1129;
+    --aub:#251737;
+    --aub2:#2d1d44;
+    --paper:#f6f1e7;
+    --paper2:#efe7d6;
+    --purple:#6a4a9e;
+    --purple2:#9a79cc;
+    --lav:#cfc2e4;
+    --mut:#6f6680;
+    --ochre:#b98a2f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:#d9d2e5;font-family:'Inter',sans-serif;color:var(--ink);}
+  ::selection{background:var(--purple);color:#fff;}
+  .frame{width:1440px;margin:0 auto;background:var(--paper);box-shadow:0 30px 80px rgba(0,0,0,.25);}
+  img{display:block;}
+  h1,h2,h3{font-family:'Playfair Display',serif;font-weight:600;}
+  .kicker{font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--purple);display:flex;align-items:center;gap:16px;}
+  .kicker::before{content:"";width:38px;height:1px;background:var(--purple);}
+  .dark .kicker{color:var(--lav);}
+  .dark .kicker::before{background:var(--lav);}
+  .btn{display:inline-block;font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;letter-spacing:.02em;
+       padding:16px 32px;border-radius:999px;text-decoration:none;transition:transform .25s ease, box-shadow .25s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-solid{background:var(--ink);color:#fff;}
+  .btn-outline{border:1px solid rgba(28,17,41,.35);color:var(--ink);}
+  .btn-cream{background:var(--paper);color:var(--ink);}
+  .btn-ghostd{border:1px solid rgba(246,241,231,.4);color:var(--paper);}
+
+  /* browser chrome */
+  .chrome{display:flex;align-items:center;gap:14px;background:#e9e2f2;padding:13px 26px;border-bottom:1px solid #d8cee8;}
+  .cdots{display:flex;gap:7px;}
+  .cdots span{width:11px;height:11px;border-radius:50%;}
+  .cdots span:nth-child(1){background:#f26d5f;}
+  .cdots span:nth-child(2){background:#f5bf4f;}
+  .cdots span:nth-child(3){background:#5fc454;}
+  .curl{flex:1;background:#fff;border-radius:999px;padding:8px 18px;font-size:13px;color:var(--mut);text-align:center;}
+
+  /* announce */
+  .announce{background:var(--ink);color:var(--lav);font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;justify-content:center;gap:56px;padding:12px 0;}
+  .announce b{color:#fff;font-weight:600;}
+
+  /* header */
+  header{display:flex;align-items:center;justify-content:space-between;padding:30px 84px;background:var(--paper);}
+  .logo .name{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--ink);line-height:1;}
+  .logo .sub{font-size:9.5px;letter-spacing:.44em;text-transform:uppercase;color:var(--mut);margin-top:7px;}
+  nav{display:flex;gap:40px;align-items:center;}
+  nav a{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-bottom:4px;border-bottom:1px solid transparent;}
+  nav a:hover{border-bottom-color:var(--purple);}
+  .hphone{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--purple);border:1px solid rgba(106,74,158,.35);border-radius:999px;padding:10px 22px;text-decoration:none;}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.12fr .95fr;gap:90px;align-items:center;padding:96px 84px 112px;background:var(--paper);}
+  .hero h1{font-size:76px;line-height:1.06;letter-spacing:-.01em;margin:26px 0 30px;}
+  .hero h1 em{font-style:italic;background:linear-gradient(105deg,var(--purple) 20%,var(--purple2) 80%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p.lede{font-size:17px;line-height:1.7;color:var(--mut);max-width:520px;margin-bottom:40px;}
+  .cta-row{display:flex;gap:28px;align-items:center;}
+  .arrowlink{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.02em;border-bottom:1px solid rgba(28,17,41,.4);padding-bottom:5px;}
+  .arrowlink:hover{color:var(--purple);border-bottom-color:var(--purple);}
+  .stats{display:flex;margin-top:64px;}
+  .stat{padding:6px 40px;border-left:1px solid rgba(28,17,41,.16);}
+  .stat:first-child{padding-left:0;border-left:none;}
+  .stat .n{font-family:'Playfair Display',serif;font-size:40px;color:var(--purple);line-height:1.1;}
+  .stat .n small{font-size:22px;}
+  .stat .l{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin-top:8px;}
+
+  .hero-visual{position:relative;}
+  .arch{position:relative;border-radius:300px 300px 26px 26px;overflow:hidden;}
+  .arch img{width:112%;margin-left:-6%;height:100%;object-fit:cover;}
+  .arch::after{content:"";position:absolute;inset:0;border-radius:inherit;
+    box-shadow:inset 0 -90px 130px rgba(28,17,41,.38), inset 0 0 0 1px rgba(28,17,41,.1);}
+  .hero-visual .arch{height:640px;}
+  .offset{position:absolute;left:-64px;bottom:40px;width:272px;height:198px;border:10px solid var(--paper);
+    border-radius:18px;overflow:hidden;box-shadow:0 26px 55px rgba(28,17,41,.3);transform:rotate(-4deg);}
+  .offset img{width:100%;height:100%;object-fit:cover;}
+  .badge{position:absolute;top:-24px;right:26px;width:134px;height:134px;border-radius:50%;background:var(--paper);
+    box-shadow:0 18px 40px rgba(28,17,41,.22);display:flex;align-items:center;justify-content:center;}
+  .badge .bstar{position:absolute;font-size:22px;color:var(--ochre);}
+  .badge svg{position:absolute;inset:0;animation:spin 26s linear infinite;}
+  .badge text{font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.6px;fill:var(--purple);text-transform:uppercase;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* ticker */
+  .ticker{background:var(--aub);overflow:hidden;padding:20px 0;border-top:1px solid rgba(207,194,228,.18);border-bottom:1px solid rgba(207,194,228,.18);}
+  .track{display:flex;width:max-content;white-space:nowrap;animation:tick 46s linear infinite;}
+  .track span{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;color:transparent;
+    -webkit-text-stroke:1px rgba(207,194,228,.45);padding-right:34px;}
+  @keyframes tick{to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){.track{animation:none;}.badge svg{animation:none;}}
+
+  /* menu */
+  .menu{display:grid;grid-template-columns:440px 1fr;gap:100px;padding:120px 84px;background:var(--paper);}
+  .menu h2{font-size:56px;line-height:1.12;margin:24px 0 22px;}
+  .menu h2 em{font-style:italic;color:var(--purple);}
+  .menu .mp{font-size:15.5px;line-height:1.7;color:var(--mut);}
+  .mnote{margin-top:36px;font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--purple);}
+  .mrows{display:flex;flex-direction:column;}
+  .mrow{display:grid;grid-template-columns:74px 1fr;gap:28px;padding:34px 0;border-top:1px solid rgba(28,17,41,.13);}
+  .mrow:last-child{border-bottom:1px solid rgba(28,17,41,.13);}
+  .mnum{font-family:'Playfair Display',serif;font-style:italic;font-size:25px;color:var(--purple);padding-top:5px;}
+  .mrow h3{font-size:31px;margin-bottom:10px;letter-spacing:-.01em;}
+  .mrow p{font-size:15px;line-height:1.65;color:var(--mut);max-width:560px;}
+
+  /* story */
+  .story{background:var(--aub);color:var(--paper);padding:130px 84px;
+    background-image:radial-gradient(circle, rgba(207,194,228,.07) 4.5px, transparent 5.5px);
+    background-size:46px 46px;}
+  .sgrid{display:grid;grid-template-columns:1fr 490px;gap:110px;align-items:center;}
+  .story h2{font-size:56px;line-height:1.14;margin:24px 0 28px;color:#fff;}
+  .story h2 em{font-style:italic;color:var(--purple2);}
+  .story p{font-size:16px;line-height:1.75;color:var(--lav);max-width:520px;margin-bottom:20px;}
+  .spoints{margin-top:40px;border-top:1px solid rgba(207,194,228,.22);}
+  .sp{display:flex;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(207,194,228,.22);font-size:15px;color:var(--lav);}
+  .sp b{color:#fff;font-weight:600;}
+  .sp .d{margin-left:auto;font-family:'Playfair Display',serif;font-style:italic;color:var(--purple2);font-size:15px;white-space:nowrap;}
+  .stack{position:relative;height:600px;}
+  .stack .a1{position:absolute;top:0;right:0;width:400px;height:310px;border-radius:200px 200px 22px 22px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.4);}
+  .stack .a2{position:absolute;bottom:30px;left:0;width:420px;height:260px;border-radius:22px;overflow:hidden;
+    border:1px solid rgba(207,194,228,.25);box-shadow:0 30px 60px rgba(0,0,0,.45);}
+  .stack img{width:100%;height:100%;object-fit:cover;}
+  .stack .cap{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-family:'Playfair Display',serif;
+    font-style:italic;font-size:16px;color:var(--lav);white-space:nowrap;}
+
+  /* gallery */
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);background:var(--aub2);}
+  .gtile{position:relative;height:430px;overflow:hidden;}
+  .gtile img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;}
+  .gtile:hover img{transform:scale(1.06);}
+  .gtile::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -110px 110px rgba(28,17,41,.55);}
+  .gtile .tag{position:absolute;left:26px;bottom:24px;z-index:2;font-size:11px;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;color:#fff;background:rgba(28,17,41,.55);padding:10px 18px;border-radius:999px;backdrop-filter:blur(4px);}
+
+  /* reviews */
+  .reviews{background:var(--paper2);padding:130px 84px;}
+  .rhead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:70px;}
+  .rhead h2{font-size:56px;margin-top:24px;}
+  .rhead .rr{text-align:right;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);line-height:2;}
+  .rgrid{display:grid;grid-template-columns:1.25fr .85fr;gap:110px;}
+  .feat .qmark{font-family:'Playfair Display',serif;font-size:120px;line-height:.6;color:var(--purple);display:block;margin-bottom:6px;}
+  .feat blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:37px;line-height:1.35;color:var(--ink);}
+  .feat .stars{color:var(--ochre);font-size:16px;letter-spacing:3px;display:block;margin:34px 0 10px;}
+  .feat .who{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;}
+  .feat .src{font-size:12px;color:var(--mut);margin-top:4px;}
+  .smalls .sq{padding:30px 0;border-top:1px solid rgba(28,17,41,.14);}
+  .smalls .sq:last-child{border-bottom:1px solid rgba(28,17,41,.14);}
+  .smalls blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--ink);}
+  .smalls .stars{color:var(--ochre);font-size:13px;letter-spacing:2.5px;display:block;margin-bottom:12px;}
+  .smalls .who{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-top:14px;}
+  .smalls .src{font-size:11.5px;color:var(--mut);margin-top:3px;}
+
+  /* visit */
+  .visit{display:grid;grid-template-columns:1fr 500px;gap:110px;padding:130px 84px;background:var(--paper);align-items:start;}
+  .visit h2{font-size:56px;margin:24px 0 14px;}
+  .visit .vsub{font-size:15.5px;color:var(--mut);margin-bottom:46px;}
+  .hrow{display:flex;justify-content:space-between;align-items:baseline;padding:17px 0;border-bottom:1px solid rgba(28,17,41,.13);}
+  .hrow:first-of-type{border-top:1px solid rgba(28,17,41,.13);}
+  .hrow .day{font-size:11.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);}
+  .hrow .time{font-family:'Playfair Display',serif;font-size:21px;color:var(--ink);}
+  .hrow .time i{font-style:normal;color:var(--mut);padding:0 8px;}
+  .vpanel{background:var(--aub);border-radius:28px;padding:48px 46px;color:var(--paper);
+    background-image:radial-gradient(circle, rgba(207,194,228,.06) 4.5px, transparent 5.5px);background-size:46px 46px;}
+  .vpanel h3{font-size:30px;color:#fff;margin-bottom:34px;}
+  .vrow{padding:20px 0;border-top:1px solid rgba(207,194,228,.2);}
+  .vrow .vl{font-size:10.5px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--purple2);margin-bottom:8px;}
+  .vrow .vv{font-size:15.5px;line-height:1.6;color:var(--lav);}
+  .vrow .vv b{color:#fff;font-weight:600;}
+  .vpanel .btn{display:block;text-align:center;margin-top:14px;}
+  .vpanel .btn:first-of-type{margin-top:28px;}
+
+  /* cta */
+  .ctaband{position:relative;padding:120px 84px;text-align:center;color:var(--paper);overflow:hidden;}
+  .ctaband .bg{position:absolute;inset:0;}
+  .ctaband .bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;}
+  .ctaband .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(28,17,41,.9), rgba(28,17,41,.86));}
+  .ctaband .inner{position:relative;z-index:2;}
+  .ctaband h2{font-size:58px;color:#fff;}
+  .ctaband h2 em{font-style:italic;color:var(--purple2);}
+  .ctaband p{font-size:16px;color:var(--lav);margin:20px 0 40px;}
+  .ctaband .row{display:flex;gap:20px;justify-content:center;}
+
+  footer{background:var(--ink);color:var(--lav);padding:90px 84px 40px;}
+  .bigword{font-family:'Playfair Display',serif;font-weight:700;font-size:172px;line-height:.9;letter-spacing:.02em;
+    color:transparent;-webkit-text-stroke:1px rgba(207,194,228,.3);white-space:nowrap;overflow:hidden;margin-bottom:70px;}
+  .fgrid{display:flex;justify-content:space-between;gap:60px;font-size:13.5px;line-height:2;}
+  .fcol h4{font-family:'Playfair Display',serif;font-size:19px;color:#fff;margin-bottom:12px;font-weight:600;}
+  .fcol a{color:var(--lav);text-decoration:none;}
+  .fcol a:hover{color:#fff;}
+  .fnote{border-top:1px solid rgba(207,194,228,.16);margin-top:60px;padding-top:24px;font-size:11.5px;color:#8d7fae;line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <div class="chrome">
+    <div class="cdots"><span></span><span></span><span></span></div>
+    <div class="curl">floundersnewquay.co.uk</div>
+  </div>
+
+  <div class="announce">
+    <span>15 East Street, Newquay</span>
+    <span><b>01637 854858</b></span>
+    <span>4.6 &#9733; &middot; 1,057 Google reviews</span>
+  </div>
+
+  <header>
+    <div class="logo">
+      <div class="name">Flounders</div>
+      <div class="sub">Fish &amp; Chips &middot; Newquay</div>
+    </div>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#story">Story</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Find us</a>
+      <a class="hphone" href="tel:+441637854858">01637 854858</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="kicker">East Street, Newquay</div>
+      <h1>Proper <em>fish &amp; chips</em>, fried fresh in Newquay</h1>
+      <p class="lede">Battered fish, proper chips and our much-loved curry sauce — served from the little purple shop on East Street since 2008. Eat in with us, or take your box down to the seafront.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="tel:+441637854858">Call 01637 854858</a>
+        <a class="arrowlink" href="#visit">Find the shop &rarr;</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n">4.6<small>&#9733;</small></div><div class="l">Google rating</div></div>
+        <div class="stat"><div class="n">1,057</div><div class="l">Reviews</div></div>
+        <div class="stat"><div class="n">2008</div><div class="l">Frying since</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="arch"><img src="images/f08.jpg" alt="Flounders Fish and Chips shopfront on East Street, Newquay"></div>
+      <div class="offset"><img src="images/f04.jpg" alt="Flounders fish and chips in branded paper"></div>
+      <div class="badge">
+        <svg viewBox="0 0 134 134">
+          <defs><path id="cir" d="M 67 12 A 55 55 0 1 1 66.9 12"/></defs>
+          <text><textPath href="#cir">Est. 2008 &middot; Newquay &middot; Fish &amp; Chips &middot; Cornwall &middot;&#160;</textPath></text>
+        </svg>
+        <div class="bstar">&#9733;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="track">
+      <span>fish &amp; chips &middot; curry sauce &middot; jumbo sausages &middot; est. 2008 &middot; east street &middot; eat in or takeaway &middot;&nbsp;</span>
+      <span>fish &amp; chips &middot; curry sauce &middot; jumbo sausages &middot; est. 2008 &middot; east street &middot; eat in or takeaway &middot;&nbsp;</span>
+    </div>
+  </div>
+
+  <section class="menu" id="menu">
+    <div>
+      <div class="kicker">The menu</div>
+      <h2>The classics, <em>done properly</em></h2>
+      <p class="mp">Everything comes straight from the fryer, wrapped and ready in minutes. Ring ahead and your box will be fresh when you reach the counter.</p>
+      <p class="mnote">Plus the rest of the chippy favourites &mdash; see today&rsquo;s boards in the shop.</p>
+    </div>
+    <div class="mrows">
+      <div class="mrow">
+        <div class="mnum">01.</div>
+        <div><h3>Battered fish</h3><p>Crisp, golden batter around flaky white fish &mdash; cod or saithe, fried to order.</p></div>
+      </div>
+      <div class="mrow">
+        <div class="mnum">02.</div>
+        <div><h3>Chips</h3><p>Proper chip-shop chips. Best with curry sauce poured straight over the top.</p></div>
+      </div>
+      <div class="mrow">
+        <div class="mnum">03.</div>
+        <div><h3>Jumbo sausages</h3><p>Big, battered and always popular &mdash; the one the kids ask for by name.</p></div>
+      </div>
+      <div class="mrow">
+        <div class="mnum">04.</div>
+        <div><h3>Curry sauce</h3><p>&ldquo;The curry sauce blew us away&rdquo; &mdash; the side our regulars keep coming back for.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story dark" id="story">
+    <div class="sgrid">
+      <div>
+        <div class="kicker">Our story</div>
+        <h2>A Newquay favourite <em>since 2008</em></h2>
+        <p>Flounders has been frying on East Street for over fifteen years &mdash; a small, family-run shop with purple paper, a fish on the sign, and a queue of regulars who wouldn&rsquo;t go anywhere else.</p>
+        <p>We&rsquo;re a short stroll from the beaches, so most boxes don&rsquo;t make it past the harbour wall. But there&rsquo;s a cosy dining room if you&rsquo;d rather sit in and take your time.</p>
+        <div class="spoints">
+          <div class="sp"><span><b>Frying since 2008</b> &mdash; over fifteen years on East Street</span><span class="d">est. 2008</span></div>
+          <div class="sp"><span><b>1,057 Google reviews</b> at 4.6 stars and counting</span><span class="d">4.6 &#9733;</span></div>
+          <div class="sp"><span><b>Eat in or takeaway</b> &mdash; dining room inside, seafront minutes away</span><span class="d">your choice</span></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="a1"><img src="images/f07.jpg" alt="Flounders 10th anniversary balloons, 2008 to 2018"></div>
+        <div class="a2"><img src="images/f01.jpg" alt="Inside the Flounders dining room, East Street, Newquay"></div>
+        <div class="cap">ten years of Flounders, 2008&ndash;2018</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="g3">
+    <div class="gtile"><img src="images/f04.jpg" alt="The classic Flounders box"><div class="tag">The classic box</div></div>
+    <div class="gtile"><img src="images/f06.jpg" alt="Fish and chips on Flounders purple polka dot paper"><div class="tag">Purple paper, always</div></div>
+    <div class="gtile"><img src="images/f02.jpg" alt="Flounders takeaway box with a view over Newquay and the sea"><div class="tag">Best seat in Cornwall</div></div>
+  </div>
+
+  <section class="reviews" id="reviews">
+    <div class="rhead">
+      <div>
+        <div class="kicker">Reviews</div>
+        <h2>4.6 stars, straight <em style="font-style:italic;color:var(--purple);">from the regulars</em></h2>
+      </div>
+      <div class="rr">Verified Google reviews<br>1,057 and counting</div>
+    </div>
+    <div class="rgrid">
+      <div class="feat">
+        <span class="qmark">&ldquo;</span>
+        <blockquote>The curry sauce blew us away and the fish was perfectly crispy.</blockquote>
+        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <div class="who">Samantha</div>
+        <div class="src">Google review</div>
+      </div>
+      <div class="smalls">
+        <div class="sq">
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <blockquote>&ldquo;Hands down one of the best chippies in Cornwall!&rdquo;</blockquote>
+          <div class="who">Maryam</div>
+          <div class="src">Google review</div>
+        </div>
+        <div class="sq">
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <blockquote>&ldquo;One of the best fish &amp; chips I&rsquo;ve ever had!&rdquo;</blockquote>
+          <div class="who">Abhi</div>
+          <div class="src">Google review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit">
+    <div>
+      <div class="kicker">Find us</div>
+      <h2>Visit the shop</h2>
+      <p class="vsub">15 East Street, Newquay &mdash; a short stroll from Towan Beach.</p>
+      <div class="hrow"><span class="day">Monday</span><span class="time">4:30 &ndash; 8:30 pm</span></div>
+      <div class="hrow"><span class="day">Tuesday</span><span class="time">4:30 &ndash; 8:30 pm</span></div>
+      <div class="hrow"><span class="day">Wednesday</span><span class="time">12:00 &ndash; 1:45 pm<i>&middot;</i>4:30 &ndash; 8:30 pm</span></div>
+      <div class="hrow"><span class="day">Thursday</span><span class="time">12:00 &ndash; 1:45 pm<i>&middot;</i>4:30 &ndash; 8:30 pm</span></div>
+      <div class="hrow"><span class="day">Friday</span><span class="time">12:00 &ndash; 1:45 pm<i>&middot;</i>4:30 &ndash; 8:30 pm</span></div>
+      <div class="hrow"><span class="day">Saturday</span><span class="time">12:00 &ndash; 8:30 pm</span></div>
+      <div class="hrow"><span class="day">Sunday</span><span class="time">4:00 &ndash; 8:00 pm</span></div>
+      <p style="font-size:12px;color:var(--mut);margin-top:18px;">Hours from the Flounders Google listing &mdash; worth a quick ring on bank holidays.</p>
+    </div>
+    <div class="vpanel">
+      <h3>Flounders Fish &amp; Chips</h3>
+      <div class="vrow"><div class="vl">Address</div><div class="vv">15 East Street<br>Newquay, Cornwall TR7 1DN</div></div>
+      <div class="vrow"><div class="vl">Phone</div><div class="vv"><b>01637 854858</b></div></div>
+      <div class="vrow"><div class="vl">Rating</div><div class="vv">4.6 &#9733; &middot; 1,057 Google reviews</div></div>
+      <a class="btn btn-cream" href="tel:+441637854858">Call the shop</a>
+      <a class="btn btn-ghostd" href="https://www.google.com/maps/search/?api=1&amp;query=Flounders+15+East+St+Newquay+TR7+1DN" target="_blank">Open in Google Maps</a>
+    </div>
+  </section>
+
+  <div class="ctaband">
+    <div class="bg"><img src="images/f03.jpg" alt="Behind the counter at Flounders"></div>
+    <div class="inner">
+      <h2>Hungry? <em>The fryer&rsquo;s on.</em></h2>
+      <p>Ring ahead and your box will be fresh when you get here.</p>
+      <div class="row">
+        <a class="btn btn-cream" href="tel:+441637854858">Call 01637 854858</a>
+        <a class="btn btn-ghostd" href="https://www.google.com/maps/search/?api=1&amp;query=Flounders+15+East+St+Newquay+TR7+1DN" target="_blank">Get directions</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="bigword">FLOUNDERS</div>
+    <div class="fgrid">
+      <div class="fcol" style="max-width:340px;">
+        <h4>Flounders</h4>
+        Fish &amp; Chips &middot; Newquay<br>
+        15 East Street, Newquay TR7 1DN<br>
+        01637 854858
+      </div>
+      <div class="fcol">
+        <h4>Opening hours</h4>
+        Mon &amp; Tue from 4:30 pm<br>
+        Wed&ndash;Fri 12&ndash;1:45 pm &amp; 4:30&ndash;8:30 pm<br>
+        Sat 12&ndash;8:30 pm &middot; Sun 4&ndash;8 pm
+      </div>
+      <div class="fcol">
+        <h4>Quick links</h4>
+        <a href="#menu">Menu</a><br>
+        <a href="#story">Our story</a><br>
+        <a href="#visit">Find us</a>
+      </div>
+    </div>
+    <div class="fnote">Concept website created by RudranshCortex as a design sample for Flounders &mdash; not the official Flounders website. Photos from the Flounders Google listing.</div>
+  </footer>
+
+</div>
+</body>
+</html>
